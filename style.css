@@ -1,0 +1,474 @@
+/* 1. Değişken Tanımlamaları */
+:root {
+  --bg-color: #f0f2f5;
+  --text-color: #1d1d1f;
+  --accent: #6366f1;
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 2. Dark Mode Tetikleyici */
+#theme-switch:checked ~ .main-wrapper {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-bg: #1e293b;
+  --accent: #818cf8;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode'da body background rengini değiştir */
+body:has(#theme-switch:checked) {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+}
+
+/* 3. Genel Temizlik ve Geçişler */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: "Inter", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.main-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+/* 4. Checkbox ve Buton Tasarımı */
+.theme-checkbox {
+  display: none;
+} /* Checkbox'ı gizle */
+
+.theme-label {
+  cursor: pointer;
+  background: var(--card-bg);
+  padding: 10px 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+/* 4. İkonların Görünürlüğü */
+.light-icon {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.dark-icon {
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+#theme-switch:checked ~ .main-wrapper .light-icon {
+  display: none;
+}
+
+#theme-switch:checked ~ .main-wrapper .dark-icon {
+  display: block;
+}
+
+/* 5. Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+/* 6. Grid Sistemi Kurulumu */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 eşit sütun */
+  grid-auto-rows: 160px; /* Her satır 160px yüksekliğinde */
+  gap: 20px;
+}
+
+/* 7. Kart Genel Stili */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 32px;
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+/* Dark mode'da cardlar */
+#theme-switch:checked ~ .main-wrapper .card {
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* 7. Profil Kartı Özel Yerleşimi */
+.profile-card {
+  grid-column: span 2; /* 2 sütun genişlik */
+  grid-row: span 2; /* 2 satır yükseklik */
+  background-color: var(--accent);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  margin: 0;
+}
+
+.profile-card h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 60px;
+  margin-bottom: 16px;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.profile-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.cta-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  align-self: flex-start;
+}
+
+.cta-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 8. Yetenekler Kartı Yerleşimi */
+.skills-card {
+  grid-row: span 2; /* Dikeyde 2 kutu boyunda yer kaplar */
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.skill-list li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.skill-list li span {
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-block;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.skill-list li span:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+/* 9. İstatistik Kartı Stili */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-desc {
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  margin-top: 5px;
+}
+
+/* 10. Görsel Kartı */
+.image-card {
+  grid-row: span 2;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
+  transition: transform 0.3s ease;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.placeholder-image img {
+  width: 100%;
+}
+
+.image-card:hover .placeholder-image {
+  transform: scale(1.05);
+}
+
+/* Placeholder for missing image */
+.profile-image[src*="profile.jpg"] {
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image[src*="profile.jpg"]:before {
+  content: "📸";
+  font-size: 3rem;
+  color: white;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 20px;
+  border-radius: 0 0 32px 32px;
+}
+
+.image-title {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.image-card:hover .profile-image {
+  transform: scale(1.05);
+}
+
+/* 11. Proje Kartı Yerleşimi (Yatayda 2 sütun) */
+.project-card {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: var(--card-bg);
+}
+
+.project-info span {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.project-info h3 {
+  margin: 10px 0;
+  font-size: 1.4rem;
+}
+
+.project-link {
+  width: 50px;
+  height: 50px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* 11. Sosyal Medya Kartı */
+.social-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.social-icons {
+  display: flex;
+  gap: 11px;
+}
+
+.s-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.s-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--shadow-color);
+  border-color: var(--accent);
+}
+
+/* FontAwesome iconları için */
+.s-icon i {
+  font-size: 1.4rem;
+}
+
+/* 12. Global Hover Efekti */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+/* 13. RESPONSIVE TASARIM */
+
+/* Tablet Görünümü (992px altı) */
+@media (max-width: 992px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr); /* 4 kolon yerine 2 kolona düşür */
+    grid-auto-rows: auto; /* Yükseklik içeriğe göre esnesin */
+  }
+}
+
+/* Mobil Görünümü (600px altı) */
+@media (max-width: 600px) {
+  .main-wrapper {
+    padding: 20px 15px; /* Kenar boşluklarını daralt */
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr; /* Her şeyi tek bir sütuna topla */
+    gap: 15px;
+  }
+
+  /* Mobilde tüm kartların özel yayılımlarını iptal et */
+  .card,
+  .profile-card,
+  .skills-card,
+  .project-card {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  .profile-card {
+    padding: 25px;
+  }
+
+  .profile-card h1 {
+    font-size: 1.8rem; /* Mobilde başlığı küçült */
+  }
+
+  .project-card {
+    flex-direction: column; /* Proje kartındaki oku ve metni alt alta al */
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
