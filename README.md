@@ -28,7 +28,6 @@ This project is a personal portfolio website developed using the modern web desi
   - CSS Custom Properties (Variables)
   - Media Queries
 - **Font Awesome** - For icons
-- **Vanilla JavaScript** - Interactive features
 
 ## 📁 Project Structure
 
